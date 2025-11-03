@@ -1,6 +1,9 @@
 package com.portingdeadmods.examplemod;
 
 import com.portingdeadmods.examplemod.registries.*;
+import com.portingdeadmods.portingdeadlibs.api.blockentities.ContainerBlockEntity;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.slf4j.Logger;
@@ -20,6 +23,7 @@ public final class ExampleMod {
 
     public ExampleMod(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::registerPayloads);
+        modEventBus.addListener(this::registerCapabilities);
 
         EMItems.ITEMS.register(modEventBus);
         EMBlocks.BLOCKS.register(modEventBus);
@@ -34,4 +38,9 @@ public final class ExampleMod {
     private void registerPayloads(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar registrar = event.registrar(MODID);
     }
+
+    private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, EMBlockEntityTypes.EXAMPLE.get(), ContainerBlockEntity::getItemHandlerOnSide);
+    }
+
 }

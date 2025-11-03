@@ -5,6 +5,7 @@ import com.portingdeadmods.examplemod.registries.EMBlockEntityTypes;
 import com.portingdeadmods.examplemod.registries.EMTranslations;
 import com.portingdeadmods.portingdeadlibs.api.blockentities.ContainerBlockEntity;
 import com.portingdeadmods.portingdeadlibs.api.utils.IOAction;
+import com.portingdeadmods.portingdeadlibs.utils.capabilities.HandlerUtils;
 import it.unimi.dsi.fastutil.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -22,12 +23,9 @@ import java.util.Map;
 public class ExampleBlockEntity extends ContainerBlockEntity implements MenuProvider {
     public ExampleBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(EMBlockEntityTypes.EXAMPLE.get(), blockPos, blockState);
-        addItemHandler(9);
-    }
-
-    @Override
-    public <T> Map<Direction, Pair<IOAction, int[]>> getSidedInteractions(BlockCapability<T, @Nullable Direction> blockCapability) {
-        return Map.of();
+        addItemHandler(HandlerUtils::newItemStackHandler, builder -> builder
+                .slots(9)
+                .onChange(slot -> this.updateData()));
     }
 
     @Override
