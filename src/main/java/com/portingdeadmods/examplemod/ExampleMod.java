@@ -2,6 +2,7 @@ package com.portingdeadmods.examplemod;
 
 import com.portingdeadmods.examplemod.registries.*;
 import com.portingdeadmods.portingdeadlibs.api.blockentities.ContainerBlockEntity;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -43,4 +44,7 @@ public final class ExampleMod {
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, EMBlockEntityTypes.EXAMPLE.get(), ContainerBlockEntity::getItemHandlerOnSide);
     }
 
+    public static ResourceLocation rl(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MODID, path);
+    }
 }
